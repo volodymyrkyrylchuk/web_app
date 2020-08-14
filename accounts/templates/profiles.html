@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+
 {% for i in result %}
 <br><a href="/profiles/show/{{i.id}}">{{ i.nickname }}</a>
 <br>{{ i.login }}
