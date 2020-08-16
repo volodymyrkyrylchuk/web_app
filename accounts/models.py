@@ -11,4 +11,20 @@ class Profile(models.Model):
     def __str__(self):
         return f'nickname - {self.nickname}, id - {self.id}, password - {self.password}'
 
+class Publication(models.Model):
+    publication_date = models.DateTimeField('Date of comment', auto_now=True)
+    author = models.ForeignKey()
+    image = models.ImageField(upload_to='images/', null=False, blank=True)
+    file = models.FileField(upload_to='files/', null=True, blank=True)
+    comments = models.ManyToManyField(Profile)
+
+    def publish(self):
+        self.publication_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return "{0} - {1}".format(self.author, self.publication_date)
+
+
+
 
