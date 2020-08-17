@@ -12,7 +12,7 @@ class Profile(models.Model):
         return f'nickname - {self.nickname}, id - {self.id}, password - {self.password}'
 
 class Publication(models.Model):
-    publication_date = models.DateTimeField('Date of comment', auto_now=True)
+    publication_date = models.DateTimeField('Date of comment', auto_now_add=True)
     author = models.ForeignKey()
     image = models.ImageField(upload_to='images/', null=False, blank=True)
     file = models.FileField(upload_to='files/', null=True, blank=True)
