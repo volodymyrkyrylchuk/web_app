@@ -1,4 +1,4 @@
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponse
 
 from django.db.models import Q
 from django.shortcuts import render
@@ -52,3 +52,7 @@ def add_profile(request):
             'form': form
         }
     )
+
+
+def edit_profile(request, slug):
+    return HttpResponse(f'Profile edit: {slug}')
