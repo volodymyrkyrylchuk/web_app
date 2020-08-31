@@ -4,7 +4,7 @@ from django.http.response import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 
 from accounts.forms import ProfileAddForm, ProfileEditForm
-from accounts.models import Profile
+from accounts.models import Profile, Publication, Comments
 
 
 # Create your views here.
@@ -76,3 +76,16 @@ def edit_profile(request, slug):
         }
     )
 
+
+def get_publication(request, id):
+    publication = Publication.objects.get(id=id)
+    comments = Comments.objects.get(publication=publication)
+    return render(request, 'publication.html',
+                  {'publication': publication,
+                   'comments': comments})
+
+
+try:
+    user = Profile.objects.get(id=id)
+except ObjectDoesNotExist:
+    user.error('User does not exist')

@@ -23,5 +23,5 @@ urlpatterns = [
     path('profiles/add/', views.add_profile),
     path('profiles/show/<slug>', views.get_profile),
     path('profiles/edit/<slug>', views.edit_profile),
-    path('', views.get_profiles_list)
+    path('publication/<int:pk>/', views.get_publication, name='publication'),
 ]

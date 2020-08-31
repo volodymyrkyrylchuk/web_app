@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}PUBLICATION{% endblock %}
+{% block content %}
+
+<p>
+   Our Publication:
+   <p><strong>Publication date:</strong> {{publication.publication_date}}</p>
+   <p><strong>Author:</strong> {{publication.author}}</p>
+   <p><strong>Image:</strong> {{publication.image}}</p>
+   <p><strong>File:</strong> {{publication.file}}</p>
+   <p><strong>Author of comment:</strong> {{comments.author}}</p>
+   <p><strong>Comments:</strong> {{comments.publication}}</p>
+
+</p>
+
+        {% for i in comments %}
+        <li>{{ comments.author }}</li>
+        {% endfor %}
+
+
+{% endblock %}
