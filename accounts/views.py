@@ -64,6 +64,7 @@ def get_publication(request, id):
         context={
             'date': publication.create_date,
             'file': os.path.join('../../', publication.media.url),
+            'author': publication.author,
             'comments': comments
         }
     )
