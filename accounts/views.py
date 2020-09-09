@@ -1,5 +1,5 @@
-from django.http.response import HttpResponseRedirect
-
+from django.http.response import HttpResponseRedirect, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -24,8 +24,8 @@ def get_profiles_list(request):
     )
 
 
-def get_profile(request, id):
-    profile = Profile.objects.get(id=id)
+def get_profile(request, slug):
+    profile = Profile.objects.get(id=slug)
     return render(
         request,
         'profile.html',
@@ -48,6 +48,29 @@ def add_profile(request):
     return render(
         request,
         template_name='profile_add.html',
+        context={
+            'form': form
+        }
+    )
+
+
+def edit_profile(request, slug):
+    try:
+        profile = Profile.object.get(id=slug)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f'Profile id {slug} doesnt exist')
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=profile)
+        if form.is_valid():
+           form.save()
+           return HttpResponseRedirect(f'/profiles/show/{slug}')
+
+    elif request.method == 'GET':
+        form = ProfileEditForm(instance=profile)
+
+    return render(
+        request,
+        template_name='profile_edit.html',
         context={
             'form': form
         }
