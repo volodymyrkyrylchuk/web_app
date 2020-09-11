@@ -4,7 +4,9 @@ from django.db.models import Q
 from django.shortcuts import render
 
 from accounts.forms import ProfileAddForm
-from accounts.models import Profile
+from accounts.models import Profile, Publication
+import os
+from our_project.settings import BASE_DIR
 
 
 # Create your views here.
@@ -50,5 +52,19 @@ def add_profile(request):
         template_name='profile_add.html',
         context={
             'form': form
+        }
+    )
+
+def get_publication(request, id):
+    publication = Publication.objects.get(id=id)
+    comments = publication.comments.all()
+    return render(
+        request,
+        'publication.html',
+        context={
+            'date': publication.create_date,
+            'file': os.path.join('../../', publication.media.url),
+            'author': publication.author,
+            'comments': comments
         }
     )
