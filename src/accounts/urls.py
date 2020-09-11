@@ -1,10 +1,10 @@
 from django.urls import path
-from accounts.views import get_profiles_list, get_profile, add_profile
+from accounts.views import ProfilesListView, ProfileCreateView, ProfileDetailView
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('', get_profiles_list, name='list'),
-    path('add/', add_profile, name='add'),
-    path('show/<id>', get_profile, name='show'),
+    path('', ProfilesListView.as_view(), name='list'),
+    path('add/', ProfileCreateView.as_view(), name='add'),
+    path('show/<item_id>', ProfileDetailView.as_view(), name='show'),
 ]
