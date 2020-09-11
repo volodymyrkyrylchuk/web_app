@@ -19,10 +19,6 @@ class Following(models.Model):
     # You can even add info about when user started following
     created = models.DateTimeField(auto_now_add=True)
 
-class Publication(models.Model):
-    content = models.FileField()
-
-
 
 
 

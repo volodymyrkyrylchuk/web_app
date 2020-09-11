@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView
 
 from accounts.forms import ProfileAddForm
-from accounts.models import Profile, Publication
+from accounts.models import Profile
 
 
 class ProfilesListView(ListView):
