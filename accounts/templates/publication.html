@@ -1,21 +1,19 @@
-{% extends "base.html" %}
-{% block title %}PUBLICATION{% endblock %}
-{% block content %}
-
-<p>
-   Our Publication:
-   <p><strong>Publication date:</strong> {{publication.publication_date}}</p>
-   <p><strong>Author:</strong> {{publication.author}}</p>
-   <p><strong>Image:</strong> {{publication.image}}</p>
-   <p><strong>File:</strong> {{publication.file}}</p>
-   <p><strong>Author of comment:</strong> {{comments.author}}</p>
-   <p><strong>Comments:</strong> {{comments.publication}}</p>
-
-</p>
-
-        {% for i in comments %}
-        <li>{{ comments.author }}</li>
-        {% endfor %}
-
-
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>publication</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+{% for a in publication %}
+   <div class="btn btn-success btn-lrg">
+       author: {{ a.author }}
+       <br>
+       publication_date: {{ a.publication_date }}
+       <br>
+       image: {{ a.image }}
+   </div>
+{% endfor %}
+</body>
+</html>

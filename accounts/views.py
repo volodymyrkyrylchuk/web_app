@@ -7,7 +7,6 @@ from accounts.forms import ProfileAddForm, ProfileEditForm
 from accounts.models import Profile, Publication, Comments
 
 
-# Create your views here.
 def get_profiles_list(request):
     objects = Profile.objects.all()
     search = request.GET.get('search')
@@ -78,14 +77,16 @@ def edit_profile(request, slug):
 
 
 def get_publication(request, id):
-    publication = Publication.objects.get(id=id)
-    comments = Comments.objects.get(publication=publication)
-    return render(request, 'publication.html',
-                  {'publication': publication,
-                   'comments': comments})
+    template = 'publication.html'
+    try:
+        publication = Publication.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f'Publication id {id} doesnt exist')
 
-
-try:
-    user = Profile.objects.get(id=id)
-except ObjectDoesNotExist:
-    user.error('User does not exist')
+    comments = Comments.objects.filter(publication=publication)
+    content = {
+        'publication': publication,
+        'comments': comments,
+    }
+    return render(request,
+                  template, content)

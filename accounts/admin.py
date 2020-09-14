@@ -7,17 +7,13 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class PublicationAdmin(admin.ModelAdmin):
-    list_display = ('publication_date', 'author', 'image', 'file')
+    list_display = ('profile_id', 'publication_date', 'author', 'image', 'file')
 
 
 class CommentsAdmin(admin.ModelAdmin):
-    list_display = ('author', 'publication', 'text')
+    list_display = ('author', 'publication')
 
-
-# Register your models here.
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Publication, PublicationAdmin)
 admin.site.register(Comments, CommentsAdmin)
-
-
