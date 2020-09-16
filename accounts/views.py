@@ -1,13 +1,13 @@
-from django.http.response import HttpResponseRedirect, HttpResponse
+import os
+
+from accounts.forms import ProfileAddForm, ProfileEditForm
+from accounts.models import Profile
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from django.http.response import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 
-from accounts.forms import ProfileAddForm
-from accounts.models import Profile
 
-
-# Create your views here.
 def get_profiles_list(request):
     objects = Profile.objects.all()
     search = request.GET.get('search')
@@ -73,5 +73,20 @@ def edit_profile(request, slug):
         template_name='profile_edit.html',
         context={
             'form': form
+        }
+    )
+
+
+def get_publication(request, id):
+    publication = Publication.objects.get(id=id)
+    comments = publication.comments.all()
+    return render(
+        request,
+        'publication.html',
+        context={
+            'date': publication.publication_date,
+            'file': os.path.join('../../', publication.media.url),
+            'author': publication.author,
+            'comments': comments
         }
     )
