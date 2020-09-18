@@ -1,5 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView
 
 from accounts.forms import ProfileAddForm
@@ -26,6 +28,7 @@ class ProfileDetailView(DetailView):
     pk_url_kwarg = 'item_id'
 
 
+@method_decorator(login_required, name='dispatch')
 class ProfileCreateView(CreateView):
     model = Profile
     template_name = 'profile_add.html'

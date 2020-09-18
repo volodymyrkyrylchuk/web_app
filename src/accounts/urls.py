@@ -1,4 +1,5 @@
-from django.urls import path
+from django.http import HttpResponseRedirect
+from django.urls import path, include
 from accounts.views import ProfilesListView, ProfileCreateView, ProfileDetailView
 
 app_name = 'accounts'

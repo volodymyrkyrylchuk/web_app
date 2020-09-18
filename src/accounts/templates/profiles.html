@@ -3,8 +3,7 @@
 
 
 {% for i in result %}
-<br><a href="{% url 'accounts:show' i.id  %}">{{ i.nickname }}</a>
-<br>{{ i.login }}
+<br><a href="{% url 'accounts:show' i.id  %}">{{ i.bio }}</a>
 <br><a>______</a>
 {% endfor %}
 
