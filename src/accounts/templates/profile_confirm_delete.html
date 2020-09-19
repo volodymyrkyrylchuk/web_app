@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ item_id }}"?</p>
+    <input type="submit" value="Confirm">
+</form>
