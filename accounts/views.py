@@ -90,3 +90,13 @@ def get_publication(request, id):
     }
     return render(request,
                   template, content)
+
+
+def get_publications_list(request):
+    publications = Publication.objects.all()
+    content = {
+        'publications': publications
+    }
+    return render(request,
+                  'publication_list.html', content)
+

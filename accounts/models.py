@@ -19,7 +19,7 @@ class Publication(models.Model):
     file = models.FileField(upload_to='files/', null=True, blank=True)
 
     def __str__(self):
-        return "{0} - {1}".format(self.author, self.publication_date)
+        return "{0} - {1}".format(self.author, self.publication_date, self.image, self.file)
 
 
 class Comments(models.Model):
