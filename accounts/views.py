@@ -1,13 +1,12 @@
-from django.http.response import HttpResponseRedirect
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from django.http.response import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 
-from accounts.forms import ProfileAddForm
-from accounts.models import Profile
+from accounts.forms import ProfileAddForm, ProfileEditForm
+from accounts.models import Profile, Publication, Comments
 
 
-# Create your views here.
 def get_profiles_list(request):
     objects = Profile.objects.all()
     search = request.GET.get('search')
@@ -24,8 +23,8 @@ def get_profiles_list(request):
     )
 
 
-def get_profile(request, id):
-    profile = Profile.objects.get(id=id)
+def get_profile(request, slug):
+    profile = Profile.objects.get(id=slug)
     return render(
         request,
         'profile.html',
@@ -52,3 +51,52 @@ def add_profile(request):
             'form': form
         }
     )
+
+
+def edit_profile(request, slug):
+    try:
+        profile = Profile.objects.get(id=slug)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f'Profile id {slug} doesnt exist')
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(f'/profiles/show/{slug}')
+
+    elif request.method == 'GET':
+        form = ProfileEditForm(instance=profile)
+
+    return render(
+        request,
+        template_name='profile_edit.html',
+        context={
+            'form': form
+        }
+    )
+
+
+def get_publication(request, id):
+    template = 'publication.html'
+    try:
+        publication = Publication.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f'Publication id {id} doesnt exist')
+
+    comments = Comments.objects.filter(publication=publication)
+    content = {
+        'publication': publication,
+        'comments': comments,
+    }
+    return render(request,
+                  template, content)
+
+
+def get_publications_list(request):
+    publications = Publication.objects.all()
+    content = {
+        'publications': publications
+    }
+    return render(request,
+                  'publication_list.html', content)
+

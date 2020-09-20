@@ -15,12 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from accounts.views import get_profiles_list, get_profile, add_profile
+from accounts.views import get_profiles_list, add_profile, get_profile, edit_profile, get_publication, get_publications_list
+from django.conf import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('profiles/', get_profiles_list),
     path('profiles/add/', add_profile),
-    path('profiles/show/<id>', get_profile),
-    path('', get_profiles_list)
+    path('profiles/show/<slug>', get_profile),
+    path('profiles/edit/<slug>', edit_profile),
+    path('', get_publications_list),
+    path('publication/<int:id>/', get_publication, name='publication')
 ]
+
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

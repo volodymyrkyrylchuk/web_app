@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Publication list</title>
+</head>
+<body>
+
+    {% for publication in publications %}
+    <a href = {%url 'publication' publication.pk %}>
+        <div>
+            <div style="text-align: center;">
+                <p>author: {{ publication.author.nickname }}</p>
+            </div>
+            <br>
+            {% if publication.image %}
+            <img src="{{ publication.image.url }}">
+            {% endif %}
+            <br>
+            <br>
+            {% if publication.file %}
+            <video name='Энергопотребление_vs_тепловыделение_vs_TDP' controls autoplay width='50%' height='40%'>
+                <source src="{{ publication.file.url }}">
+                </source>
+            </video>
+            {% endif %}
+        </div>
+    </a>
+    {% empty %}
+        <p>No publications yet</p>
+	{% endfor %}
+
+</body>
+</html>
