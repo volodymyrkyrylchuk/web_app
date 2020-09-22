@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from accounts.forms import ProfileAddForm
 from accounts.models import Profile
@@ -28,11 +29,11 @@ class ProfileDetailView(DetailView):
     pk_url_kwarg = 'item_id'
 
 
-@method_decorator(login_required, name='dispatch')
-class ProfileCreateView(CreateView):
+class ProfileCreateView(PermissionRequiredMixin, CreateView):
     model = Profile
     template_name = 'profile_add.html'
     form_class = ProfileAddForm
+    # permission_required = ('accounts.add_profile', )
 
     def get_success_url(self):
         return reverse('accounts:list')

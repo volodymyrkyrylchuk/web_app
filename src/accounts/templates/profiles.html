@@ -2,8 +2,18 @@
 {% block content %}
 
 
+
+
+{% if perms.accounts.add_profile %}
+<button onclick="window.location.href='/profiles/add'">Add user</button>
+{% endif %}
+
+
+
+
 {% for i in result %}
-<br><a href="{% url 'accounts:show' i.id  %}">{{ i.bio }}</a>
+<br><a href="{% url 'accounts:show' i.id  %}">go to</a>
+<br>{{ i.nickname }}
 <br><a>______</a>
 {% endfor %}
 
