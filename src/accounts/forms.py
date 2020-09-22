@@ -3,7 +3,15 @@ from django.forms import ModelForm
 from accounts.models import Profile
 
 
-class ProfileAddForm(ModelForm):
+class ProfileBaseForm(ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ('bio', 'location', 'birth_date', 'nickname')
+
+
+class ProfileAddForm(ProfileBaseForm):
+    pass
+
+
+class ProfileEditForm(ProfileBaseForm):
+    pass
