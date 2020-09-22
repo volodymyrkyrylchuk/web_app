@@ -4,7 +4,7 @@
 
 
 
-{% if perms.accounts.add_profile and not request.user.profile  %}
+{% if not request.user.profile  %}
 <button onclick="window.location.href='/profiles/add'">Add own profile</button>
 {% endif %}
 

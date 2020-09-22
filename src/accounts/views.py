@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.conf import settings
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from accounts.forms import ProfileAddForm, ProfileEditForm
@@ -18,7 +19,7 @@ class ProfilesListView(ListView):
         qs = super().get_queryset()
         search = self.request.GET.get('search')
         if search:
-            qs = qs.filter(Q(nickname__icontains=search) | Q(login__icontains=search))
+            qs = qs.filter(Q(nickname__icontains=search))
         return qs
 
 
@@ -37,13 +38,16 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        print(kwargs['instance'].user.username)
         if self.request.user != kwargs['instance'].user \
-                and not(self.request.user.groups.filter(name='admin_application').exists()):
+                and \
+                not(self.request.user.groups.filter(name=settings.ADMIN_GROUP).exists()):
             return self.handle_no_permission()
+
         return kwargs
 
     def get_success_url(self):
-        return reverse('accounts:list')
+        return reverse('profiles:list')
 
 
 class ProfileCreateView(PermissionRequiredMixin, CreateView):
@@ -59,7 +63,7 @@ class ProfileCreateView(PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('accounts:list')
+        return reverse('profiles:list')
 
 
 class ProfileDeleteView(LoginRequiredMixin, DeleteView):

@@ -129,3 +129,6 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = '/profiles/'
+
+
+ADMIN_GROUP = 'admin_application'

@@ -7,6 +7,7 @@ class ProfileBaseForm(ModelForm):
     class Meta:
         model = Profile
         fields = ('bio', 'location', 'birth_date', 'nickname')
+        # fields = '__all__'
 
 
 class ProfileAddForm(ProfileBaseForm):
