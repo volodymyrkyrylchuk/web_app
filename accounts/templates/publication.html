@@ -17,7 +17,7 @@
     </div>
     {% if comments %}
         {% for com in comments %}
-           <p>{{com.author.nickname}}</p>
+           <p>{{com.text}}</p>
         {% endfor %}
     {% else %}
         <P>No comments yet!</P>

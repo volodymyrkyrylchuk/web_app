@@ -11,7 +11,7 @@ class PublicationAdmin(admin.ModelAdmin):
 
 
 class CommentsAdmin(admin.ModelAdmin):
-    list_display = ('author', 'publication')
+    list_display = ('author', 'publication', 'text')
 
 
 admin.site.register(Profile, ProfileAdmin)

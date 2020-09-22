@@ -25,3 +25,4 @@ class Publication(models.Model):
 class Comments(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     publication = models.ForeignKey(Publication, on_delete=models.CASCADE)
+    text = models.TextField(null=True, blank=True)
