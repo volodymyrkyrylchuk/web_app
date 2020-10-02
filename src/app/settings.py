@@ -39,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'django_extensions',
-    'custom_auth'
+    'custom_auth',
+    'core'
 ]
 
 MIDDLEWARE = [
+    'core.middlewares.PerformanceMonitoringMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -134,3 +136,4 @@ LOGIN_REDIRECT_URL = '/profiles/'
 ADMIN_GROUP = 'admin_application'
 LOGIN_URL = '/account/login'
 LOGOUT_REDIRECT_URL = '/profiles/'
+MAX_RESPONSE_TIME = 2  # in seconds

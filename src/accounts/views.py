@@ -17,6 +17,11 @@ class ProfilesListView(ListView):
     context_object_name = 'result'
 
     def get_queryset(self):
+        import time
+        import random
+
+        time.sleep(random.randint(1, 4))
+
         qs = super().get_queryset()
         search = self.request.GET.get('search')
         if search:
