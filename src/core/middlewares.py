@@ -20,13 +20,15 @@ class PerformanceMonitoringMiddleware:
         pr.enable()  # start profiling
         response = self.get_response(request)
         pr.disable()
-        s = StringIO()
-        ps = pstats.Stats(pr, stream=s).sort_stats('cumulative')
-        ps.print_stats(10)
         finish = perf_counter()
 
         if finish - start > settings.MAX_RESPONSE_TIME:
+            s = StringIO()
+            ps = pstats.Stats(pr, stream=s).sort_stats('cumulative')
+            ps.print_stats(settings.LOG_RECORDS_COUNT)
+
             with open(f'{datetime.today().strftime("%Y-%m-%d")}_performance.log', 'a') as f:
+                f.write(f'TIME: {datetime.now().time()} \n')
                 f.write(f'URI: {request.path} \n')
                 f.write(f'METHOD: {request.method}\n')
                 if request.GET:
