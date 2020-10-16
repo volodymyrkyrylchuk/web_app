@@ -13,8 +13,14 @@ f = Faker()
 
 
 class AccountsTestCase(TestCase):
+    fixtures = ['test_auth.json']
+
     def setUp(self) -> None:
         pass
+
+    def test_profiles_count(self):
+        print(Profile.objects.all().count())
+        self.assertEqual(1, 1)
 
     def test_create_user(self):
         email = f.email()
@@ -56,7 +62,7 @@ class AccountsIntegrationTestCase(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, 'HelloWorld')
 
-    def test_edit_view_auth(self):
+    def test_add_view_auth(self):
         resp = self.client.get(reverse('profiles:add'))
         self.assertRedirects(resp, '/account/login/?next=%2Fprofiles%2Fadd%2F')
 
