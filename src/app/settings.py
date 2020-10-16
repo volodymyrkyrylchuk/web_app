@@ -128,7 +128,7 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = '/profiles/'
 
 ADMIN_GROUP = 'admin_application'
-LOGIN_URL = '/account/login'
+LOGIN_URL = '/account/login/'
 LOGOUT_REDIRECT_URL = '/profiles/'
 MAX_RESPONSE_TIME = 2  # in seconds
 LOG_RECORDS_COUNT = 20  # count of rows
