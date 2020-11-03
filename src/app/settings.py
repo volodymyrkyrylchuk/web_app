@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'user',
-        'PASSWORD': 'pass',
+        'NAME': 'django',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -142,9 +142,15 @@ LOGGING = {
             'style': '{',
         }
     },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
     'handlers': {
         'file': {
             'level': 'INFO',
+            'filters': ['require_debug_true'],
             'class': 'logging.FileHandler',
             'filename': 'info.log',
             'formatter': 'verbose'
