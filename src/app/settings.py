@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.http import UnreadablePostError
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -133,6 +134,15 @@ LOGOUT_REDIRECT_URL = '/profiles/'
 MAX_RESPONSE_TIME = 2  # in seconds
 LOG_RECORDS_COUNT = 20  # count of rows
 
+
+def skip_empty_description_post(description):
+    if description.exc_info:
+        exc_type, exc_value = description.exc_info[:1]
+        if isinstance(exc_value, UnreadablePostError):
+            return False
+    return True
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -140,11 +150,21 @@ LOGGING = {
         'verbose': {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
             'style': '{',
-        }
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'skip_empty_description_post': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': skip_empty_description_post,
+        },
     },
     'handlers': {
         'file': {
             'level': 'INFO',
+            'filters': ['require_debug_true'],
             'class': 'logging.FileHandler',
             'filename': 'info.log',
             'formatter': 'verbose'
