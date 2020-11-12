@@ -133,6 +133,9 @@ LOGOUT_REDIRECT_URL = '/profiles/'
 MAX_RESPONSE_TIME = 2  # in seconds
 LOG_RECORDS_COUNT = 20  # count of rows
 
+ADMIN_LOGIN = 'admin'
+ADMIN_PASSWORD = 'sha1$4e987$afbcf42e21bd417fb71db8c66b321e9fc33051de'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

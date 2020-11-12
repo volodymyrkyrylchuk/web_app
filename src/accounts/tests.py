@@ -2,10 +2,11 @@ from django.test import TestCase
 from faker import Faker
 from django.urls import reverse
 from datetime import datetime, date
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, check_password
 from accounts.models import Profile
 from django.test.client import Client
 
+from src.app import settings
 
 f = Faker()
 
@@ -63,6 +64,21 @@ class AccountsIntegrationTestCase(TestCase):
         self.assertContains(resp, 'HelloWorld')
 
     def test_add_view_auth(self):
-        resp = self.client.get(reverse('profiles:add'))
-        self.assertRedirects(resp, '/account/login/?next=%2Fprofiles%2Fadd%2F')
+            resp = self.client.get(reverse('profiles:add'))
+            self.assertRedirects(resp, '/account/login/?next=%2Fprofiles%2Fadd%2F')
 
+    supports_inactive_user = False
+
+    def authenticate(self, username=None, password=None):
+        login_valid = (settings.LOGIN_URL == username)
+        pwd_valid = check_password(password, settings.ADMIN_PASSWORD)
+        if login_valid and pwd_valid:
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                user = User(username=username, password='get from settings.py')
+                user.is_staff = True
+                user.is_superuser = True
+                user.save()
+            return user
+        return None
