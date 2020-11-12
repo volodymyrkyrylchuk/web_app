@@ -10,8 +10,7 @@ class ProfileBaseForm(ModelForm):
 
 
 class ProfileAddForm(ProfileBaseForm):
-    pass
-
+   pass
 
 class ProfileEditForm(ProfileBaseForm):
-    pass
+   pass
